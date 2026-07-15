@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanner</title>
+    <script src="https://kit.fontawesome.com/29e7aa5d79.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            background-image: url('https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1517&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .clear-button {
+            background-color: #6c757d;
+        }
+
+        .clear-button:hover {
+            background-color: #5a6268;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .footer-social {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            color: #333;
+            margin: 0 10px;
+            font-size: 24px;
+        }
+
+        .back-button {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .back-button a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+    <body>
+        <div class="container">
+            <h1>Port Scanner</h1>
+            <form id="portScannerForm">
+                <div class="form-group">
+                    <label for="target">Target IP Address/hostname:</label>
+                    <input type="text" id="target" name="target" required>
+                </div>
+                <div class="form-group">
+                    <label for="startPort">Start Port:</label>
+                    <input type="number" id="startPort" name="startPort" min="1" max="65535" required>
+                </div>
+                <div class="form-group">
+                    <label for="endPort">End Port:</label>
+                    <input type="number" id="endPort" name="endPort" min="1" max="65535" required>
+                </div>
+                <button type="button" onclick="scanPorts()">Scan</button>
+                <button type="button" class="clear-button" onclick="clearInput()">Clear</button>
+            </form>
+            <div id="results">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Port</th>
+                            <th>Service</th>
+                            <th>Status</th>
+                            <th>High Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                        <tr id="placeholder-row">
+                            <td colspan="4">Waiting for scan results...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Footer Social Icons -->
+            <div class="footer-social">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+
+            <!-- Back Button -->
+            <div class="back-button">
+                <a href="/" onclick="goBack()">Back to Main</a>
+            </div>
+        </div>
+        <script>
+            async function scanPorts() {
+                const target = document.getElementById('target').value.trim();
+                const startPort = parseInt(document.getElementById('startPort').value);
+                const endPort = parseInt(document.getElementById('endPort').value);
+                const resultsBody = document.getElementById('results-body');
+                resultsBody.innerHTML = ''; 
+
+                const response = await fetch('/scan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ target: target, ports: `${startPort}-${endPort}` })
+                });
+
+                if (!response.ok) {
+                    const errorMessage = `Error: ${response.status} - ${response.statusText}`;
+                    resultsBody.innerHTML = `<tr><td colspan="2">${errorMessage}</td></tr>`;
+                    return;
+                }
+
+                const scanResult = await response.json();
+                if (Object.keys(scanResult).length === 0) {
+                    resultsBody.innerHTML = `<tr><td colspan="2">No ports scanned</td></tr>`;
+                    return;
+                }
+
+                for (const host in scanResult) {
+                    const ports = scanResult[host].ports;
+                    ports.forEach(portInfo => {
+                        const { port, state, name, dangerous } = portInfo; 
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${port}</td><td>${name}</td><td>${state}</td><td>${dangerous ? 'Yes' : 'No'}</td>`;
+                        resultsBody.appendChild(row);
+                    });
+                
+                }
+            }
+
+            function clearInput() {
+                document.getElementById("portScannerForm").reset();
+                document.getElementById("results-body").innerHTML = `
+                    <tr id="placeholder-row">
+                        <td colspan="2">Waiting for scan results...</td>
+                    </tr>
+                `;
+            }
+
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Port Scanner</title>
+        <!-- Google Fonts for Typography -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <!-- FontAwesome for social media icons -->
+        <script src="https://kit.fontawesome.com/29e7aa5d79.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/static/css/styles.css">
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="/static/css/img/logo.png" alt="Logo">
+                </div>
+                    <div class="title">
+                        <h1>Port Scanner PBL-214</h1>
+                    </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#close-ports-info">How to Close</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="button" onclick="openPortScanner()">QuickScan</button>
+            </nav>
+        </header>
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Secure Your Network with Our Port Scanner</h1>
+                <p>Identify and close vulnerable ports with our quick scanner.</p>
+                <button class="cta" onclick="getStarted()">Get Started</button>
+            </div>
+        </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="/static/css/img/range.png" alt="Quick Scan">
+                    </div>
+                    <h3>Quick Scanning</h3>
+                    <p>Fast and efficient scanning to quickly identify open and vulnerable ports.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="/static/css/img/detail report.png" alt="Detailed Reports">
+                    </div>
+                    <h3>Detailed Reports</h3>
+                    <p>Comprehensive reports that highlight vulnerabilities and recommended actions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="/static/css/img/range.png" alt="Customizable Settings">
+                    </div>
+                    <h3>Customizable Settings</h3>
+                    <p>Customize scan parameters and select specific ports or port ranges for scanning.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="/static/css/img/compatible.png" alt="Platform Compatibility">
+                    </div>
+                    <h3>Platform Compatibility</h3>
+                    <p>Compatible with major operating systems and can be integrated with other tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="icon">
+                        <img src="/static/css/img/add ip.jpeg" alt="Step 1">
+                    </div>
+                    <h3>Step 1</h3>
+                    <p>Enter the target IP address or URL to scan.</p>
+                </div>
+                <div class="step">
+                    <div class="icon">
+                        <img src="/static/css/img/2.jpeg" alt="Step 2">
+                    </div>
+                    <h3>Step 2</h3>
+                    <p>Choose the scanning options and start the scan.</p>
+                </div>
+                <div class="step">
+                    <div class="icon">
+                        <img src="/static/css/img/detail report.png" alt="Step 3">
+                    </div>
+                    <h3>Step 3</h3>
+                    <p>Receive the results with detailed analysis and recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <input type="checkbox" id="faq1" class="faq-checkbox">
+            <label for="faq1" class="faq-question">What is a port scanner?</label>
+            <div class="faq-answer">
+                A port scanner is a software application designed to probe a server or host for open ports. This helps identify potential security vulnerabilities and assess network health.
+            </div>
+        </div>
+        <div class="faq-item">
+            <input type="checkbox" id="faq2" class="faq-checkbox">
+            <label for="faq2" class="faq-question">Is it legal to use a port scanner?</label>
+            <div class="faq-answer">
+                It depends on where and how it's used. Scanning your own network is legal, but scanning networks without permission can be illegal. Always get permission before scanning.
+            </div>
+        </div>
+        <div class="faq-item">
+            <input type="checkbox" id="faq3" class="faq-checkbox">
+            <label for="faq3" class="faq-question">How often should I scan my network?</label>
+            <div class="faq-answer">
+                Regularly scanning your network is important for maintaining security. A monthly scan is a good starting point, but this frequency can vary depending on your network's size and complexity.
+            </div>
+        </div>
+    </section>
+
+    <!-- Information on Closing Ports -->
+    <section id="close-ports-info" class="close-ports-info">
+        <h2 class="section-title">How to Close Ports</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="/static/css/img/Windows.png" alt="Windows">
+                </div>
+                <h3>Windows</h3>
+                <p>To close a port on Windows, follow these steps:</p>
+                <ol>
+                    <li>Open the Command Prompt as an administrator.</li>
+                    <li>Run the following command to find the process ID (PID) associated with the port:
+                        <pre>netstat -aon | findstr :PORT_NUMBER</pre>
+                    </li>
+                    <li>Identify the PID from the output.</li>
+                    <li>Terminate the process using the PID:
+                        <pre>taskkill /PID PID_NUMBER /F</pre>
+                    </li>
+                    <li>To permanently close the port, use Windows Firewall to create a new inbound rule that blocks the port.</li>
+                </ol>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="/static/css/img/Linux.png" alt="Linux">
+                </div>
+                <h3>Linux</h3>
+                <p>To close a port on Linux, follow these steps:</p>
+                <ol>
+                    <li>Open a terminal.</li>
+                    <li>Run the following command to find the process using the port:
+                        <pre>sudo lsof -i :PORT_NUMBER</pre>
+                    </li>
+                    <li>Identify the process ID (PID) from the output.</li>
+                    <li>Terminate the process using the PID:
+                        <pre>sudo kill -9 PID_NUMBER</pre>
+                    </li>
+                    <li>To block the port using iptables, run:
+                        <pre>sudo iptables -A INPUT -p tcp --dport PORT_NUMBER -j DROP</pre>
+                    </li>
+                </ol>
+            </div>
+        <div id="macos">
+            <div class="feature-card">
+                
+                <div class="feature-icon">
+                    <img src="/static/css/img/MacOs.png" alt="macOS">
+                </div>
+                <h3>macOS</h3>
+                <p>To close a port on macOS, follow these steps:</p>
+                <ol>
+                    <li>Open a terminal.</li>
+                    <li>Run the following command to find the process using the port:
+                        <pre>sudo lsof -i :PORT_NUMBER</pre>
+                    </li>
+                    <li>Identify the process ID (PID) from the output.</li>
+                    <li>Terminate the process using the PID:
+                        <pre>sudo kill -9 PID_NUMBER</pre>
+                    </li>
+                    <li>To block the port using pf (Packet Filter), edit the pf configuration file located at /etc/pf.conf and add a rule to block the port, then reload pf:
+                        <pre>sudo pfctl -f /etc/pf.conf</pre>
+                    </li>
+                </ol>
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Have questions? Reach out to us via the form below, and we'll get back to you as soon as possible.</p>
+        
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+    
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact Us</a>
+                <a href="#faq">FAQ</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Port Scanner. PBL-214.</p>
+        </div>
+    </footer>
+    <script src="/static/js/scripts.js"></script>      
+</body>
+</html>
