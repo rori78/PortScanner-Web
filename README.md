@@ -10,6 +10,7 @@ Table of Contents
 7. FAQ 
 8. Contact Information 
 
+
 1. Introduction 
 
 Welcome to the Web-Based Port Scanner Manual. This tool allows you to scan open ports on a 
