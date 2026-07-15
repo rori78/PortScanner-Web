@@ -11,6 +11,7 @@ Table of Contents
 8. Contact Information 
 
 1. Introduction 
+
 Welcome to the Web-Based Port Scanner Manual. This tool allows you to scan open ports on a 
 specified IP address from a web interface. It is built using Flask for the backend and JavaScript 
 for the frontend. 
@@ -23,6 +24,7 @@ for the frontend.
  Basic understanding of network protocols and port scanning 
 
 4. Installation 
+
 Backend 
 
 1. Clone the Repository 
